@@ -7,28 +7,26 @@ function addContact(event) {
   let contactPhone = form.contactPhone.value
   let emergencyContact = form.emergencyContact.checked
   let newId = generateId()
-  let existingContact = contacts.find(contact => contacts.name == contactName)
+  loadContacts()
+  let existingContact = contacts.find(contact => contact.name == contactName)
   if(!existingContact) {
+    console.log("a new contact was entered")                                                        // this is a test line
     contacts.push({name: contactName, phone: contactPhone, emergency: emergencyContact, id: newId})
   }
   form.reset()
+  saveContacts()
 }
 
-/**
- * Converts the contacts array to a JSON string then
- * Saves the string to localstorage at the key contacts 
- */
 function saveContacts() {
- 
+  window.localStorage.setItem("contacts", JSON.stringify(contacts))
 }
 
-/**
- * Attempts to retrieve the contacts string from localstorage
- * then parses the JSON string into an array. Finally sets
- * the contacts array to the retrieved array
- */
+
 function loadContacts() {
-  
+  let contactsData = JSON.parse(window.localStorage.getItem("contacts"))
+  if (contactsData) {
+    contacts = contactsData
+  }
 }
 
 /**
