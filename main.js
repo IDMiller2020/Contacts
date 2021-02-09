@@ -10,7 +10,9 @@ let contacts = []
  * *** push: resources/push.jpg
  */
 function addContact(event) {
-  
+  event.preventDefault()
+  console.log(form.contactName.value)
+  console.log(form.playerNumber.value)
 }
 
 /**

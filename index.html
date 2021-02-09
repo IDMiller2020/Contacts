@@ -26,7 +26,6 @@
   </header>
 
   <main class="container">
-    <!-- TODO Finish this form you need two more input fields one is type="checkbox" -->
     <form class="card mt-1 mb-1" id="new-contact-form" class="" onsubmit="addContact(event)">
       <div>
         <h4 class="mt-1 mb-1">
@@ -36,7 +35,15 @@
       </div>
       <div>
         <label for="name">Name:</label>
-        <input type="text" name="name">
+        <input type="text" name="contactName" required>
+        <div>
+          <label for="phone">Phone:</label>
+          <input type="text" phone="contactPhone" required>
+        </div>
+        <div>
+          <label for="emergency-contact">Emergency Contact:</label>
+          <input type="checkbox" name="emergencyContact">
+        </div>
       </div>
       <hr>
       <div class="d-flex space-between">
