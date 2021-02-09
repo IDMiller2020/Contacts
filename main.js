@@ -1,18 +1,17 @@
 let contacts = []
 
-/**
- * Called when submitting the new Contact Form
- * This method will pull data from the form
- * use the provided function to give the data an id
- * then add that data to the contacts list.
- * Then reset the form
- * *** hints:
- * *** push: resources/push.jpg
- */
 function addContact(event) {
   event.preventDefault()
-  console.log(form.contactName.value)
-  console.log(form.playerNumber.value)
+  let form = event.target
+  let contactName = form.contactName.value
+  let contactPhone = form.contactPhone.value
+  let emergencyContact = form.emergencyContact.checked
+  let newId = generateId()
+  let existingContact = contacts.find(contact => contacts.name == contactName)
+  if(!existingContact) {
+    contacts.push({name: contactName, phone: contactPhone, emergency: emergencyContact, id: newId})
+  }
+  form.reset()
 }
 
 /**
