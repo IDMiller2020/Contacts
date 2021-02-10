@@ -1,4 +1,5 @@
 let contacts = []
+loadContacts()
 
 function addContact(event) {
   event.preventDefault()
@@ -7,20 +8,18 @@ function addContact(event) {
   let contactPhone = form.contactPhone.value
   let emergencyContact = form.emergencyContact.checked
   let newId = generateId()
-  loadContacts()
   let existingContact = contacts.find(contact => contact.name == contactName)
   if(!existingContact) {
-    console.log("a new contact was entered")                                                        // this is a test line
     contacts.push({name: contactName, phone: contactPhone, emergency: emergencyContact, id: newId})
   }
   form.reset()
   saveContacts()
+  drawContacts()
 }
 
 function saveContacts() {
   window.localStorage.setItem("contacts", JSON.stringify(contacts))
 }
-
 
 function loadContacts() {
   let contactsData = JSON.parse(window.localStorage.getItem("contacts"))
@@ -29,13 +28,43 @@ function loadContacts() {
   }
 }
 
-/**
- * This function targets the contacts-list on the 
- * DOM and adds a new div element for each of the
- * contacts in the contacts array
- */
 function drawContacts() {
- 
+  let template = ""
+  contacts.forEach(contact => {
+    if(contact.emergency == true){
+      template += `
+      <div class="card mt-1 mb-1 emergency-contact">
+      <h3 class="mt-1 mb-1">${contact.name}</h3>
+      <div class="d-flex space-between">
+        <p>
+          <i class="fa fa-fw fa-phone"></i>
+          <span>${contact.phone}</span>
+        </p>
+        <i class="action fa fa-trash text-danger"></i>
+      </div>
+    </div>
+    `
+    }
+    else{
+      template += `
+      <div class="card mt-1 mb-1">
+      <h3 class="mt-1 mb-1">${contact.name}</h3>
+      <div class="d-flex space-between">
+        <p>
+          <i class="fa fa-fw fa-phone"></i>
+          <span>${contact.phone}</span>
+        </p>
+        <i class="action fa fa-trash text-danger"></i>
+      </div>
+    </div>
+    `
+    }
+    
+
+  
+  })
+
+  document.getElementById("contacts").innerHTML = template
 }
 
 /**
