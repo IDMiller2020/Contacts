@@ -8,19 +8,19 @@ function addContact(event) {
     name: form.contactName.value,
     phone: form.contactPhone.value,
     emergencyContact: form.emergencyContact.checked,
-    newId: generateId()
+    id: generateId()
   }
   let existingContact = contacts.find(contact => contact.name == form.contactName.value)
   if(!existingContact) {
     contacts.push(contact)
   }
-  form.reset()
   saveContacts()
-  drawContacts()
+  form.reset()
 }
 
 function saveContacts() {
   window.localStorage.setItem("contacts", JSON.stringify(contacts))
+  drawContacts()
 }
 
 function loadContacts() {
@@ -36,7 +36,7 @@ function drawContacts() {
   contacts.forEach(contact => {
     contactsTemplate += `
     <div class="card mt-1 mb-1 ${contact.emergencyContact ? "emergency-contact" : ""}">
-    <h3 class="mt-1 mb-1">${contact.name}</h3>
+      <h3 class="mt-1 mb-1">${contact.name}</h3>
       <div class="d-flex space-between">
         <p>
           <i class="fa fa-fw fa-phone"></i>
@@ -44,6 +44,7 @@ function drawContacts() {
         </p>
         <i class="action fa fa-trash text-danger"></i>
       </div>
+      <button type="button" onclick=removeContact("${contact.id}")>remove</button>
     </div>
     `
   })
@@ -60,6 +61,10 @@ function drawContacts() {
  * @param {string} contactId 
  */
 function removeContact(contactId) {
+  let index = contacts.findIndex(contact => contact.id === contactId)
+  contacts.splice(index, 1)
+  saveContacts()
+  drawContacts()
 }
 
 /**
