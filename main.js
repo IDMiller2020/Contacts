@@ -42,24 +42,17 @@ function drawContacts() {
           <i class="fa fa-fw fa-phone"></i>
           <span>${contact.phone}</span>
         </p>
-        <i class="action fa fa-trash text-danger"></i>
+
+        <i class="action fa fa-trash text-danger" onclick=removeContact("${contact.id}")></i>
+
       </div>
-      <button type="button" onclick=removeContact("${contact.id}")>remove</button>
+
     </div>
     `
   })
   contactListElement.innerHTML = contactsTemplate
 }
 
-/**
- * This function is called with a contact id
- * and will use the id to find and remove the 
- * contact by their id from the list of contacts
- * *** hints: 
- * *** findIndex: resources/findIndex.jpg
- * *** splice: resources/splice.jpg
- * @param {string} contactId 
- */
 function removeContact(contactId) {
   let index = contacts.findIndex(contact => contact.id === contactId)
   contacts.splice(index, 1)
