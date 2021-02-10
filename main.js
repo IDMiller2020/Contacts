@@ -1,5 +1,4 @@
 let contacts = []
-loadContacts()
 
 function addContact(event) {
   event.preventDefault()
@@ -42,11 +41,8 @@ function drawContacts() {
           <i class="fa fa-fw fa-phone"></i>
           <span>${contact.phone}</span>
         </p>
-
-        <i class="action fa fa-trash text-danger" onclick=removeContact("${contact.id}")></i>
-
+        <i class="action fa fa-trash text-danger" title="Remove Contact" onclick=removeContact("${contact.id}")></i>
       </div>
-
     </div>
     `
   })
@@ -55,24 +51,21 @@ function drawContacts() {
 
 function removeContact(contactId) {
   let index = contacts.findIndex(contact => contact.id === contactId)
+  if(index == -1){
+    throw new Error("Invalid Contact Id")
+  }
   contacts.splice(index, 1)
   saveContacts()
-  drawContacts()
 }
 
 /**
  * Toggles the visibility of the AddContact Form
  */
-function toggleAddContactForm() {
-
+function toggleAddContactForm(force) {
+  document.getElementById("new-contact-form").classList.toggle("hidden", force)
 }
 
 
-/**
- * Used to generate a random string id for mocked
- * database generated Id
- * @returns {string}
- */
 function generateId() {
   return Math.floor(Math.random() * 10000000) + "-" + Math.floor(Math.random() * 10000000)
 }
