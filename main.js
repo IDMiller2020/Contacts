@@ -31,12 +31,12 @@ function loadContacts() {
 }
 
 function drawContacts() {
-  let template = ""
+  let contactListElement = document.getElementById("contact-list")
+  let contactsTemplate = ""
   contacts.forEach(contact => {
-    if(contact.emergencyContact == true){
-      template += `
-      <div class="card mt-1 mb-1 emergency-contact">
-      <h3 class="mt-1 mb-1">${contact.name}</h3>
+    contactsTemplate += `
+    <div class="card mt-1 mb-1 ${contact.emergencyContact ? "emergency-contact" : ""}">
+    <h3 class="mt-1 mb-1">${contact.name}</h3>
       <div class="d-flex space-between">
         <p>
           <i class="fa fa-fw fa-phone"></i>
@@ -46,27 +46,8 @@ function drawContacts() {
       </div>
     </div>
     `
-    }
-    else{
-      template += `
-      <div class="card mt-1 mb-1">
-      <h3 class="mt-1 mb-1">${contact.name}</h3>
-      <div class="d-flex space-between">
-        <p>
-          <i class="fa fa-fw fa-phone"></i>
-          <span>${contact.phone}</span>
-        </p>
-        <i class="action fa fa-trash text-danger"></i>
-      </div>
-    </div>
-    `
-    }
-    
-
-  
   })
-
-  document.getElementById("contacts").innerHTML = template
+  contactListElement.innerHTML = contactsTemplate
 }
 
 /**
