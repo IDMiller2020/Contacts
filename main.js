@@ -4,13 +4,15 @@ loadContacts()
 function addContact(event) {
   event.preventDefault()
   let form = event.target
-  let contactName = form.contactName.value
-  let contactPhone = form.contactPhone.value
-  let emergencyContact = form.emergencyContact.checked
-  let newId = generateId()
-  let existingContact = contacts.find(contact => contact.name == contactName)
+  let contact = {
+    name: form.contactName.value,
+    phone: form.contactPhone.value,
+    emergencyContact: form.emergencyContact.checked,
+    newId: generateId()
+  }
+  let existingContact = contacts.find(contact => contact.name == form.contactName.value)
   if(!existingContact) {
-    contacts.push({name: contactName, phone: contactPhone, emergency: emergencyContact, id: newId})
+    contacts.push(contact)
   }
   form.reset()
   saveContacts()
@@ -31,7 +33,7 @@ function loadContacts() {
 function drawContacts() {
   let template = ""
   contacts.forEach(contact => {
-    if(contact.emergency == true){
+    if(contact.emergencyContact == true){
       template += `
       <div class="card mt-1 mb-1 emergency-contact">
       <h3 class="mt-1 mb-1">${contact.name}</h3>
